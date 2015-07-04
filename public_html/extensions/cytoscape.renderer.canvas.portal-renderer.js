@@ -10,6 +10,14 @@
     $$.style.properties.push({name: 'show-details', type: $$.style.types.trueOrFalse});
     $$.style.properties['show-details'] = {name: 'show-details', type: $$.style.types.trueOrFalse};
 
+    $$.style.properties.push({name: 'red', type: $$.style.types.percent});
+    $$.style.properties['red'] = {name: 'red', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'green', type: $$.style.types.percent});
+    $$.style.properties['green'] = {name: 'green', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'blue', type: $$.style.types.percent});
+    $$.style.properties['blue'] = {name: 'blue', type: $$.style.types.percent};
 
 
     // Draw node
@@ -266,12 +274,38 @@
             context.beginPath();
 
             context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                0,2 * Math.PI/6-0.175, 0);
+                0,(2 * Math.PI/360)*node._private.style['blue'].value * 1.1, 0);
             context.strokeStyle = "rgba(255,255,255,0)";
             context.lineTo(node._private.position['x'],
                 node._private.position['y']);
             context.fillStyle = "rgb(0,0,255)";
             context.fill();
+
+            context.closePath();
+            context.stroke();
+            context.beginPath();
+
+            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                2 * Math.PI/3,(2 * Math.PI/360)*node._private.style['red'].value * 1.1+2 * Math.PI/3, 0);
+            context.strokeStyle = "rgba(255,255,255,0)";
+            context.lineTo(node._private.position['x'],
+                node._private.position['y']);
+            context.fillStyle = "rgb(255,0,0)";
+            context.fill();
+
+            context.closePath();
+            context.stroke();
+            context.beginPath();
+
+            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                4 * Math.PI/3,(2 * Math.PI/360)*node._private.style['green'].value * 1.1 + 4 * Math.PI/3, 0);
+            context.strokeStyle = "rgba(255,255,255,0)";
+            context.lineTo(node._private.position['x'],
+                node._private.position['y']);
+            context.fillStyle = "rgb(0,255,0)";
+            context.fill();
+
+
             context.closePath();
             context.stroke();
             context.beginPath();

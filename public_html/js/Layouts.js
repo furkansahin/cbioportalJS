@@ -135,8 +135,10 @@ function refreshCytoscape(graphData) { // on dom ready
                 'text-outline-width': 2,
                 'text-outline-color': '#888',
                 'border-width': 1,
-                'show-details': 'false'
-
+                'show-details': 'false',
+                'red': 25,
+                'green': 50,
+                'blue': 75
             })
             .selector('node:parent')
             .css({
