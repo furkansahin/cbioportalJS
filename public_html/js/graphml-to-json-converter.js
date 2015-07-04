@@ -119,7 +119,7 @@ var processNode = function (theNode, pid, nodeAttributes) {
             }
         }
         else if (name == "shape") {
-            cyCSS.shape = val.toLowerCase();
+            cyCSS.shape = 'circle';
         }
         else if (name == "color") {
             if (val.indexOf(" ") > -1)

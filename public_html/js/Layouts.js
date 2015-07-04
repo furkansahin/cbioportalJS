@@ -18,6 +18,7 @@ $(function () {
                 'color': 'white',
                 'text-outline-width': 2,
                 'text-outline-color': '#888',
+                'show-details': 'false'
             })
             .selector(':selected')
             .css({
@@ -89,6 +90,8 @@ $(function () {
             refreshCytoscape(cytoscapeJsGraph);
             setFileContent("graph0.graphml");
 
+
+
         }
 
     });
@@ -127,9 +130,13 @@ function refreshCytoscape(graphData) { // on dom ready
                 'content': 'data(name)',
                 'text-valign': 'center',
                 'color': 'white',
+                'background-color': 'white',
+
                 'text-outline-width': 2,
                 'text-outline-color': '#888',
-                'border-width': 1
+                'border-width': 1,
+                'show-details': 'false'
+
             })
             .selector('node:parent')
             .css({
@@ -179,15 +186,27 @@ function refreshCytoscape(graphData) { // on dom ready
         motionBlur: true,
         wheelSensitivity: 0.1,
         ready: function(){
-            var i = 0;
-            cy.on('tap', 'node', function(evt){
-                if (i < 2){
-                    edgeNodes[i++] = this._private.data.id;
+            cy.on('mouseover', 'node', function(evt){
+                if (!this.isParent()) {
+                    this._private.style['show-details'] = true;
+                    cy.layout({
+                        name: 'preset',
+                        fit: false
+                    });
                 }
-                else{
-                    edgeNodes = [];
-                    i = 0;
+            });
+
+
+            cy.on('mouseout', 'node', function (event) {
+                if (!this.isParent())
+                {
+                    this._private.style['show-details'] = false;
+                    cy.layout({
+                        name: 'preset',
+                        fit: false
+                    });
                 }
+
             });
         }
     });
