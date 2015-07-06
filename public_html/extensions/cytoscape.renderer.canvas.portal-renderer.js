@@ -62,6 +62,68 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             node.css('background-opacity', 1.0);
         }
 
+
+        if (node._private.style['show-details'] === true)
+        {
+            var degrees = getDegrees(node);
+            if (node._private.style['amplification'].value + node._private.style['homozygous-deletion'].value  + node._private.style['gain'].value
+                + node._private.style['hemizygous-deletion'].value  > 1 ||
+                node._private.style['up-regulated'].value  + node._private.style['down-regulated'].value > 1 ||
+                node._private.style['mutated'] > 1)
+            {
+
+                console.log("Inappropriate inputs!");
+                return;
+            }
+            context.fillStyle = "#FF0000";
+            context.shadowColor = "grey";
+            context.shadowBlur = 0;
+
+            for (var i = 0; i < 7; i++) {
+                context.beginPath();
+                if (i < 5)
+                    context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
+                        degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 0);
+                else{
+                    context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
+                        degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 1);
+                }
+                context.strokeStyle = "rgba(255,255,255,0)";
+                context.lineTo(node._private.position['x'],
+                    node._private.position['y']);
+                context.fillStyle = rgbs[i];
+                context.fill();
+                context.closePath();
+                context.stroke();
+            }
+
+
+
+            context.beginPath();
+
+
+            context.strokeStyle = "rgba(0,0,0,0.7)";
+            context.shadowColor = "rgb(227,227,227)";
+            context.shadowBlur = 10;
+            context.lineWidth = 2;
+            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                3.75,5.67, 0);
+            context.lineTo(node._private.position['x'],
+                node._private.position['y']);
+
+            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                5.85,7.76, 0);
+            context.lineTo(node._private.position['x'],
+                node._private.position['y']);
+            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                1.66, 3.58, 0);
+            context.lineTo(node._private.position['x'],
+                node._private.position['y']);
+
+            context.closePath();
+            context.stroke();
+        }
+
         var r = this;
         var nodeWidth, nodeHeight;
         var style = node._private.style;
@@ -300,65 +362,7 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
                 context.fill();
             }
         }
-        if (node._private.style['show-details'] === true)
-        {
-            var degrees = getDegrees(node);
-            if (node._private.style['amplification'].value + node._private.style['homozygous-deletion'].value  + node._private.style['gain'].value
-                + node._private.style['hemizygous-deletion'].value  > 1 ||
-                node._private.style['up-regulated'].value  + node._private.style['down-regulated'].value > 1 ||
-                node._private.style['mutated'] > 1)
-            {
 
-                console.log("Inappropriate inputs!");
-                return;
-            }
-            context.fillStyle = "#FF0000";
-            context.shadowColor = "grey";
-            context.shadowBlur = 0;
-
-            for (var i = 0; i < 7; i++) {
-                context.beginPath();
-                if (i < 5)
-                    context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
-                        degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 0);
-                else{
-                    context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
-                        degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 1);
-                }
-                context.strokeStyle = "rgba(255,255,255,0)";
-                context.lineTo(node._private.position['x'],
-                    node._private.position['y']);
-                context.fillStyle = rgbs[i];
-                context.fill();
-                context.closePath();
-                context.stroke();
-            }
-
-            
-
-            context.beginPath();
-
-
-            context.strokeStyle = "black";
-            context.shadowBlur = 10;
-            context.lineWidth = 1;
-            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                3.75,5.67, 0);
-            context.lineTo(node._private.position['x'],
-                node._private.position['y']);
-
-            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                5.85,7.76, 0);
-            context.lineTo(node._private.position['x'],
-                node._private.position['y']);
-            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                1.66, 3.58, 0);
-            context.lineTo(node._private.position['x'],
-                node._private.position['y']);
-
-            context.closePath();
-            context.stroke();
-        }
 
 
 

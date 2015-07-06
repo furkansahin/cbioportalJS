@@ -131,10 +131,10 @@ function refreshCytoscape(graphData) { // on dom ready
                 'text-valign': 'center',
                 'color': 'white',
                 'background-color': 'white',
-
                 'text-outline-width': 2,
                 'text-outline-color': '#888',
                 'border-width': 1,
+
                 'show-details': 'false',
                 'amplification': 0.3,
                 'mutated': 0.75,

@@ -19261,7 +19261,7 @@ this.cytoscape = cytoscape;
               r.drawNodeText(context, ele);
             }
 
-            r.drawNode(context, ele, true);
+            //r.drawNode(context, ele, true);
           } else if( !hideEdges ) {
             r.drawEdge(context, ele);
 
