@@ -220,7 +220,6 @@ function refreshCytoscape(graphData) { // on dom ready
             cy.on('tap', 'edge', function(evt){
                 edge = true;
             });
-            var len = 0;
             cy.on('tap', '', function (event) {
                 if (tapped || edge ) {
                     edge = false;
@@ -228,7 +227,15 @@ function refreshCytoscape(graphData) { // on dom ready
                 }
                 else {
                     var nodes = cy.nodes();
+                    var exist = false;
                     for (var i = 0 ; i < nodes.length; i++){
+                        if (nodes[i]._private.style['show-details-selected'] === true)
+                        {
+                            exist = true;
+                            break;
+                        }
+                    }
+                    for (var i = 0 ; exist && i < nodes.length; i++){
                         nodes[i].css('show-details', 'false');
                         nodes[i].css('show-details-selected', 'false');
                     }
@@ -238,7 +245,6 @@ function refreshCytoscape(graphData) { // on dom ready
                     });
                     entered = false;
                 }
-                len = cy.edges(':selected').length;
             });
             cy.on('tap', 'node', function(evt){
                 tapped = false;
