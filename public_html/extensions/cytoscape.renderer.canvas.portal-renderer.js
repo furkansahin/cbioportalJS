@@ -11,17 +11,23 @@ var getDegrees = function(node){
     map['gain-end'] = map['gain-start'] + 1.1 * node._private.style['gain'].value * 100 * 2 * Math.PI / 360;
     map['hemizygous-deletion-start'] = map['gain-end'];
     map['hemizygous-deletion-end'] = map['hemizygous-deletion-start'] + 1.1 * node._private.style['hemizygous-deletion'].value * 100 * 2 * Math.PI / 360;
+    map['upper-start'] = map['hemizygous-deletion-end'];
+    map['upper-end'] = 5.68;
     map['mutated-start'] = 5.85;
     map['mutated-end'] = map['mutated-start'] + node._private.style['mutated'].value * 100 * 2 * Math.PI / 360;
+    map['right-start'] = map['mutated-end'];
+    map['right-end'] = 1.48;
     map['up-regulated-start'] = 3.58;
     map['up-regulated-end'] = map['up-regulated-start'] - 1.1 * node._private.style['up-regulated'].value * 100 * 2 * Math.PI / 360;
     map['down-regulated-start'] = map['up-regulated-end'];
     map['down-regulated-end'] = map['down-regulated-start'] - 1.1 * node._private.style['down-regulated'].value * 100 * 2 * Math.PI / 360;
+    map['left-start'] = map['down-regulated-end'];
+    map['left-end'] = 1.65;
     return map;
 };
 
-var mutNames = ['amplification', 'homozygous-deletion', 'gain', 'hemizygous-deletion', 'mutated', 'up-regulated', 'down-regulated'];
-var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158,223,224)', 'rgb(50,161,50)', 'rgb(250,185,182)', 'rgb(147,187,221)'];
+var mutNames = ['amplification', 'homozygous-deletion', 'gain', 'hemizygous-deletion','upper', 'mutated','right', 'up-regulated', 'down-regulated','left'];
+var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158,223,224)','rgb(255,255,255)', 'rgb(50,161,50)','rgb(255,255,255)', 'rgb(250,185,182)', 'rgb(147,187,221)','rgb(255,255,255)'];
 
 (function ($$) {"use strict";
     var CanvasRenderer = $$('renderer', 'canvas');
@@ -83,9 +89,9 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             context.shadowColor = "grey";
             context.shadowBlur = 0;
 
-            for (var i = 0; i < 7; i++) {
+            for (var i = 0; i < 10; i++) {
                 context.beginPath();
-                if (i < 5)
+                if (i < 7)
                     context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
                         degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 0);
                 else{
@@ -101,9 +107,8 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
                 context.stroke();
             }
 
-
-
             context.beginPath();
+
 
             if (node._private.style['show-details-selected'] === true){
                 context.shadowColor = "rgb(255,255,0)";

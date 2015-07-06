@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="57707845-b4dc-4434-b8d9-bc75e3b0a8b0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public_html/js/Layouts.js" afterPath="$PROJECT_DIR$/public_html/js/Layouts.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js" afterPath="$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="cbioportalJS.iws" />
@@ -44,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cytoscape.renderer.canvas.portal-renderer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cytoscape.renderer.canvas.portal-renderer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="55" selection-start-line="109" selection-start-column="55" selection-end-line="109" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.56675065">
+              <caret line="101" column="59" selection-start-line="101" selection-start-column="59" selection-end-line="101" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -64,10 +64,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Layouts.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Layouts.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public_html/js/Layouts.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47103274">
+            <state vertical-scroll-proportion="0.0">
               <caret line="237" column="46" selection-start-line="237" selection-start-column="46" selection-end-line="237" selection-end-column="46" />
               <folding />
             </state>
@@ -103,9 +103,9 @@
         <option value="chrome-extension://pkehgijcmpdhfbdbbnkijodmdjhbjlgp/src/include.preload.js" />
         <option value="$PROJECT_DIR$/public_html/index.html" />
         <option value="$PROJECT_DIR$/public_html/js/graphml-to-json-converter.js" />
-        <option value="$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js" />
         <option value="$PROJECT_DIR$/public_html/libs/js/cytoscape.js" />
         <option value="$PROJECT_DIR$/public_html/js/Layouts.js" />
+        <option value="$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js" />
       </list>
     </option>
   </component>
@@ -304,7 +304,13 @@
       <option name="project" value="LOCAL" />
       <updated>1436183389684</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Optimization on edge drawing">
+      <created>1436184452795</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1436184452795</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -363,11 +369,19 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Optimization on chart drawing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Optimization on chart drawing" />
+    <MESSAGE value="Optimization on edge drawing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Optimization on edge drawing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="47" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js</url>
+          <line>97</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="49" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JavascriptDebugType">
@@ -752,14 +766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="55" selection-start-line="109" selection-start-column="55" selection-end-line="109" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public_html/libs/js/jquery-1.8.2.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34962407">
@@ -778,8 +784,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public_html/js/Layouts.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47103274">
+        <state vertical-scroll-proportion="0.0">
           <caret line="237" column="46" selection-start-line="237" selection-start-column="46" selection-end-line="237" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public_html/extensions/cytoscape.renderer.canvas.portal-renderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.56675065">
+          <caret line="101" column="59" selection-start-line="101" selection-start-column="59" selection-end-line="101" selection-end-column="59" />
           <folding />
         </state>
       </provider>
