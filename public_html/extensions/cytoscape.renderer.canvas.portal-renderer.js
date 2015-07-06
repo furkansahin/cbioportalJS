@@ -33,6 +33,10 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
     $$.style.properties.push({name: 'show-details', type: $$.style.types.trueOrFalse});
     $$.style.properties['show-details'] = {name: 'show-details', type: $$.style.types.trueOrFalse};
 
+    $$.style.types.trueOrFalse = {enums: ['true', 'false']};
+    $$.style.properties.push({name: 'show-details-selected', type: $$.style.types.trueOrFalse});
+    $$.style.properties['show-details-selected'] = {name: 'show-details-selected', type: $$.style.types.trueOrFalse};
+
     $$.style.properties.push({name: 'amplification', type: $$.style.types.percent});
     $$.style.properties['amplification'] = {name: 'amplification', type: $$.style.types.percent};
 
@@ -63,7 +67,7 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
         }
 
 
-        if (node._private.style['show-details'] === true)
+        if (node._private.style['show-details'] === true || node._private.style['show-details-selected'] === true)
         {
             var degrees = getDegrees(node);
             if (node._private.style['amplification'].value + node._private.style['homozygous-deletion'].value  + node._private.style['gain'].value
@@ -101,9 +105,16 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
 
             context.beginPath();
 
+            if (node._private.style['show-details-selected'] === true){
+                context.shadowColor = "rgb(255,255,0)";
+                context.strokeStyle = "rgba(249,251,166,0.7)";
 
-            context.strokeStyle = "rgba(0,0,0,0.7)";
-            context.shadowColor = "rgb(227,227,227)";
+            }
+            else{
+                context.shadowColor = "rgb(227,227,227)";
+                context.strokeStyle = "rgba(0,0,0,0.7)";
+
+            }
             context.shadowBlur = 10;
             context.lineWidth = 2;
             context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,

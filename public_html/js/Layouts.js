@@ -136,6 +136,7 @@ function refreshCytoscape(graphData) { // on dom ready
                 'border-width': 1,
 
                 'show-details': 'false',
+                'show-details-selected': false,
                 'amplification': 0.3,
                 'mutated': 0.75,
                 'homozygous-deletion': 0.2,
@@ -192,6 +193,7 @@ function refreshCytoscape(graphData) { // on dom ready
         motionBlur: true,
         wheelSensitivity: 0.1,
         ready: function(){
+
             cy.on('mouseover', 'node', function(evt){
                 if (!this.isParent()) {
                     this._private.style['show-details'] = true;
@@ -201,19 +203,63 @@ function refreshCytoscape(graphData) { // on dom ready
                     });
                 }
             });
-
-
-            cy.on('mouseout', 'node', function (event) {
-                if (!this.isParent())
-                {
-                    this._private.style['show-details'] = false;
+            cy.on('mouseout', 'node', function(evt){
+                if (!this.selected()) {
+                    this.css('show-details', 'false');
+                    cy.layout({
+                        name: 'preset',
+                        fir: false
+                    });
+                }
+            });
+            var tapped = false;
+            var edge = false;
+            cy.on('tap', 'node', function(evt){
+                tapped = true;
+            });
+            cy.on('tap', 'edge', function(evt){
+                edge = true;
+            });
+            var len = 0;
+            cy.on('tap', '', function (event) {
+                if (tapped || edge ) {
+                    edge = false;
+                    return;
+                }
+                else {
+                    var nodes = cy.nodes();
+                    for (var i = 0 ; i < nodes.length; i++){
+                        nodes[i].css('show-details', 'false');
+                        nodes[i].css('show-details-selected', 'false');
+                    }
+                    cy.layout({
+                        name: 'preset',
+                        fit: false
+                    });
+                    entered = false;
+                }
+                len = cy.edges(':selected').length;
+            });
+            cy.on('tap', 'node', function(evt){
+                tapped = false;
+                if (!this.isParent()) {
+                    if (this._private.style['show-details-selected'] === true){
+                        this._private.style['show-details'] = false;
+                        this._private.style['show-details-selected'] = false;
+                    }
+                    else {
+                        this._private.style['show-details'] = true;
+                        this._private.style['show-details-selected'] = true;
+                    }
                     cy.layout({
                         name: 'preset',
                         fit: false
                     });
                 }
-
             });
+
+
+
         }
     });
     var panProps = ({
