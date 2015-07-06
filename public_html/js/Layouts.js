@@ -136,9 +136,13 @@ function refreshCytoscape(graphData) { // on dom ready
                 'text-outline-color': '#888',
                 'border-width': 1,
                 'show-details': 'false',
-                'red': 25,
-                'green': 50,
-                'blue': 75
+                'amplification': 0.3,
+                'mutated': 0.75,
+                'homozygous-deletion': 0.2,
+                'gain': 0.4,
+                'hemizygous-deletion': 0.1,
+                'up-regulated': 0.2,
+                'down-regulated': 0.3
             })
             .selector('node:parent')
             .css({

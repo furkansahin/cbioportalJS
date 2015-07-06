@@ -1,24 +1,58 @@
 /**
  * Created by sahinfurkan on 01/07/15.
  */
+var getDegrees = function(node){
+    var map = {};
+    map['amplification-start'] = 3.75;
+    map['amplification-end'] = 3.75 + 1.1 * node._private.style['amplification'].value * 100 * 2 * Math.PI / 360;
+    map['homozygous-deletion-start'] = map['amplification-end'];
+    map['homozygous-deletion-end'] = map['homozygous-deletion-start'] + 1.1 * node._private.style['homozygous-deletion'].value * 100 * 2 * Math.PI / 360;
+    map['gain-start'] = map['homozygous-deletion-end'];
+    map['gain-end'] = map['gain-start'] + 1.1 * node._private.style['gain'].value * 100 * 2 * Math.PI / 360;
+    map['hemizygous-deletion-start'] = map['gain-end'];
+    map['hemizygous-deletion-end'] = map['hemizygous-deletion-start'] + 1.1 * node._private.style['hemizygous-deletion'].value * 100 * 2 * Math.PI / 360;
+    map['mutated-start'] = 5.85;
+    map['mutated-end'] = map['mutated-start'] + node._private.style['mutated'].value * 100 * 2 * Math.PI / 360;
+    map['up-regulated-start'] = 3.58;
+    map['up-regulated-end'] = map['up-regulated-start'] - 1.1 * node._private.style['up-regulated'].value * 100 * 2 * Math.PI / 360;
+    map['down-regulated-start'] = map['up-regulated-end'];
+    map['down-regulated-end'] = map['down-regulated-start'] - 1.1 * node._private.style['down-regulated'].value * 100 * 2 * Math.PI / 360;
+    return map;
+};
+
+var mutNames = ['amplification', 'homozygous-deletion', 'gain', 'hemizygous-deletion', 'mutated', 'up-regulated', 'down-regulated'];
+var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158,223,224)', 'rgb(50,161,50)', 'rgb(250,185,182)', 'rgb(147,187,221)'];
+
 (function ($$) {"use strict";
     var CanvasRenderer = $$('renderer', 'canvas');
     var CRp = CanvasRenderer.prototype;
+
 
     //add showDetails property to css features
     $$.style.types.trueOrFalse = {enums: ['true', 'false']};
     $$.style.properties.push({name: 'show-details', type: $$.style.types.trueOrFalse});
     $$.style.properties['show-details'] = {name: 'show-details', type: $$.style.types.trueOrFalse};
 
-    $$.style.properties.push({name: 'red', type: $$.style.types.percent});
-    $$.style.properties['red'] = {name: 'red', type: $$.style.types.percent};
+    $$.style.properties.push({name: 'amplification', type: $$.style.types.percent});
+    $$.style.properties['amplification'] = {name: 'amplification', type: $$.style.types.percent};
 
-    $$.style.properties.push({name: 'green', type: $$.style.types.percent});
-    $$.style.properties['green'] = {name: 'green', type: $$.style.types.percent};
+    $$.style.properties.push({name: 'mutated', type: $$.style.types.percent});
+    $$.style.properties['mutated'] = {name: 'mutated', type: $$.style.types.percent};
 
-    $$.style.properties.push({name: 'blue', type: $$.style.types.percent});
-    $$.style.properties['blue'] = {name: 'blue', type: $$.style.types.percent};
+    $$.style.properties.push({name: 'homozygous-deletion', type: $$.style.types.percent});
+    $$.style.properties['homozygous-deletion'] = {name: 'homozygous-deletion', type: $$.style.types.percent};
 
+    $$.style.properties.push({name: 'gain', type: $$.style.types.percent});
+    $$.style.properties['gain'] = {name: 'gain', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'hemizygous-deletion', type: $$.style.types.percent});
+    $$.style.properties['hemizygous-deletion'] = {name: 'hemizygous-deletion', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'up-regulated', type: $$.style.types.percent});
+    $$.style.properties['up-regulated'] = {name: 'up-regulated', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'down-regulated', type: $$.style.types.percent});
+    $$.style.properties['down-regulated'] = {name: 'down-regulated', type: $$.style.types.percent};
 
     // Draw node
     CRp.drawNode = function(context, node, drawOverlayInstead) {
@@ -268,75 +302,61 @@
         }
         if (node._private.style['show-details'] === true)
         {
+            var degrees = getDegrees(node);
+            if (node._private.style['amplification'].value + node._private.style['homozygous-deletion'].value  + node._private.style['gain'].value
+                + node._private.style['hemizygous-deletion'].value  > 1 ||
+                node._private.style['up-regulated'].value  + node._private.style['down-regulated'].value > 1 ||
+                node._private.style['mutated'] > 1)
+            {
+
+                console.log("Inappropriate inputs!");
+                return;
+            }
             context.fillStyle = "#FF0000";
             context.shadowColor = "grey";
             context.shadowBlur = 0;
+
+            for (var i = 0; i < 7; i++) {
+                context.beginPath();
+                if (i < 5)
+                    context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
+                        degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 0);
+                else{
+                    context.arc(node._private.position['x'], node._private.position['y'], node._private.style['width'].value + 10,
+                        degrees[mutNames[i] + '-start'], degrees[mutNames[i] + '-end'], 1);
+                }
+                context.strokeStyle = "rgba(255,255,255,0)";
+                context.lineTo(node._private.position['x'],
+                    node._private.position['y']);
+                context.fillStyle = rgbs[i];
+                context.fill();
+                context.closePath();
+                context.stroke();
+            }
+
+            
+
             context.beginPath();
 
-            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                0,(2 * Math.PI/360)*node._private.style['blue'].value * 1.1, 0);
-            context.strokeStyle = "rgba(255,255,255,0)";
-            context.lineTo(node._private.position['x'],
-                node._private.position['y']);
-            context.fillStyle = "rgb(0,0,255)";
-            context.fill();
 
-            context.closePath();
-            context.stroke();
-            context.beginPath();
-
-            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                2 * Math.PI/3,(2 * Math.PI/360)*node._private.style['red'].value * 1.1+2 * Math.PI/3, 0);
-            context.strokeStyle = "rgba(255,255,255,0)";
-            context.lineTo(node._private.position['x'],
-                node._private.position['y']);
-            context.fillStyle = "rgb(255,0,0)";
-            context.fill();
-
-            context.closePath();
-            context.stroke();
-            context.beginPath();
-
-            context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                4 * Math.PI/3,(2 * Math.PI/360)*node._private.style['green'].value * 1.1 + 4 * Math.PI/3, 0);
-            context.strokeStyle = "rgba(255,255,255,0)";
-            context.lineTo(node._private.position['x'],
-                node._private.position['y']);
-            context.fillStyle = "rgb(0,255,0)";
-            context.fill();
-
-
-            context.closePath();
-            context.stroke();
-            context.beginPath();
-            context.strokeStyle = "black"
+            context.strokeStyle = "black";
             context.shadowBlur = 10;
             context.lineWidth = 1;
             context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                0,2 * Math.PI/3-0.175, 0);
+                3.75,5.67, 0);
             context.lineTo(node._private.position['x'],
                 node._private.position['y']);
 
             context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                2 * Math.PI/3,4 * Math.PI/3-0.175, 0);
+                5.85,7.76, 0);
             context.lineTo(node._private.position['x'],
                 node._private.position['y']);
             context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-                4 * Math.PI/3,2 * Math.PI-0.175, 0);
+                1.66, 3.58, 0);
             context.lineTo(node._private.position['x'],
                 node._private.position['y']);
-            context.lineTo(node._private.position['x'] + node._private.style['width'].value + 10,
-                node._private.position['y']);
+
             context.closePath();
-            //     context.moveTo(-this.getNodeWidth(node) / 2, -this.getNodeHeight(node) / 2 + 5);
-
-            /*
-             context.ellipse(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-             node._private.style['height'].value + 10,0,2 * Math.PI/3,4 * Math.PI/3);
-
-             context.ellipse(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
-             node._private.style['height'].value + 10,0,4 * Math.PI/3,2 * Math.PI);
-             */
             context.stroke();
         }
 
