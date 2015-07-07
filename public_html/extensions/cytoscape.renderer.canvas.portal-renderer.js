@@ -1,6 +1,7 @@
 /**
  * Created by sahinfurkan on 01/07/15.
  */
+
 var getDegrees = function(node){
     var map = {};
     map['amplification-start'] = 3.75;
@@ -108,6 +109,71 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             }
 
             context.beginPath();
+
+            if (node._private.style['amplification'].value + node._private.style['homozygous-deletion'].value +
+                node._private.style['gain'].value + node._private.style['hemizygous-deletion'].value === 0 ){
+                var grd = context.createLinearGradient(node._private.position['x']-30,
+                    node._private.position['y']-30, node._private.position['x']+30,
+                    node._private.position['y']+30);
+                var tempRgbs = ['rgba(255,255,255,100)', 'rgba(210,210,210,100)'];
+                var b = 0;
+                for (var i= 0; i < 1.001; i+=0.02 ){
+                    grd.addColorStop(i, tempRgbs[b]);
+                    if (b == 0) b = 1;
+                    else b = 0;
+                }
+                context.fillStyle = grd;
+                context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                    3.75,5.67, 0);
+                context.lineTo(node._private.position['x'],
+                    node._private.position['y']);
+                context.fill();
+                context.closePath();
+                context.stroke();
+                context.beginPath();
+            }
+            if (node._private.style['mutated'].value === 0 ){
+                var grd = context.createLinearGradient(node._private.position['x'],
+                    node._private.position['y'], node._private.position['x']+60,
+                    node._private.position['y']+60);
+                var tempRgbs = ['rgba(255,255,255,100)', 'rgba(210,210,210,100)'];
+                var b = 0;
+                for (var i= 0; i < 1.001; i+=0.02 ){
+                    grd.addColorStop(i, tempRgbs[b]);
+                    if (b == 0) b = 1;
+                    else b = 0;
+                }
+                context.fillStyle = grd;
+                context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                    5.85,7.76, 0);
+                context.lineTo(node._private.position['x'],
+                    node._private.position['y']);
+                context.fill();
+                context.closePath();
+                context.stroke();
+                context.beginPath();
+            }
+            if (node._private.style['up-regulated'].value + node._private.style['down-regulated'].value === 0 ){
+                var grd = context.createLinearGradient(node._private.position['x']-30,
+                    node._private.position['y']-30, node._private.position['x']+30,
+                    node._private.position['y']+30);
+                var tempRgbs = ['rgba(255,255,255,100)', 'rgba(210,210,210,100)'];
+                var b = 0;
+                for (var i= 0; i < 1.001; i+=0.02 ){
+                    grd.addColorStop(i, tempRgbs[b]);
+                    if (b == 0) b = 1;
+                    else b = 0;
+                }
+                context.fillStyle = grd;
+                context.arc(node._private.position['x'],node._private.position['y'],node._private.style['width'].value + 10,
+                    1.66,3.58, 0);
+                context.lineTo(node._private.position['x'],
+                    node._private.position['y']);
+                context.fill();
+                context.closePath();
+                context.stroke();
+                context.beginPath();
+            }
 
 
             if (node._private.style['show-details-selected'] === true){

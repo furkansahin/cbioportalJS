@@ -137,12 +137,12 @@ function refreshCytoscape(graphData) { // on dom ready
 
                 'show-details': 'false',
                 'show-details-selected': false,
-                'amplification': 0.3,
-                'mutated': 0.75,
-                'homozygous-deletion': 0.2,
-                'gain': 0.4,
+                'amplification': 0.1,
+                'mutated': 0,
+                'homozygous-deletion': 0.3,
+                'gain': 0.2,
                 'hemizygous-deletion': 0.1,
-                'up-regulated': 0.2,
+                'up-regulated': 0.6,
                 'down-regulated': 0.3
             })
             .selector('node:parent')
