@@ -85,10 +85,11 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             node.css('opacity', 1.0);
             node.css('background-opacity', 1.0);
         }
+        var font = context.font;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
 
-
-
-        if (node._private.style['show-details'] === true || node._private.style['show-details-selected'] === true)
+        if (node._private.style['show-details'] === true || node.selected() === true)
         {
             var degrees = getDegrees(node);
             if (node._private.style['amplification'].value + node._private.style['homozygous-deletion'].value  + node._private.style['gain'].value
@@ -102,7 +103,7 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             }
             context.fillStyle = "#FF0000";
             context.shadowColor = "grey";
-            context.shadowBlur = 0;
+            context.shadowBlur = 10;
 
             for (var i = 0; i < 10; i++) {
                 context.beginPath();
@@ -190,7 +191,7 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             }
 
 
-            if (node._private.style['show-details-selected'] === true){
+            if (node.selected()){
                 context.shadowColor = "rgb(255,255,0)";
                 context.strokeStyle = "rgba(249,251,166,0.7)";
 
@@ -460,19 +461,20 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
         }
         if (node._private.style['show-total-alteration'] === true) {
             context.fillStyle = "#000000";
-            context.shadowColor = "black";
+            context.shadowColor = "rgb(30,30,30)";
             context.shadowOffsetX = 3;
             context.shadowOffsetY = 3;
-            context.shadowBlur = 10;
+            context.shadowBlur = 9;
             context.lineWidth = 2;
             context.beginPath();
+            context.font = "10px Verdana";
             var a = node._private.position['x'];
             var b = node._private.position['y'];
             if (node._private.style['total-alteration'].value === 100){
-                context.rect(node._private.style['mouse-position-x']+15, node._private.style['mouse-position-y']+15, 45, 20);
+                context.rect(node._private.style['mouse-position-x']+20, node._private.style['mouse-position-y']+19, 35, 15);
             }
             else {
-                context.rect(node._private.style['mouse-position-x'] + 15, node._private.style['mouse-position-y'] + 15, 35, 20);
+                context.rect(node._private.style['mouse-position-x'] + 20, node._private.style['mouse-position-y'] + 19, 25, 13);
             }
             context.fill();
             context.fillStyle = "red";
@@ -484,6 +486,7 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             context.closePath();
             context.stroke();
         }
+        context.font = font;
 
     }
 })(cytoscape);

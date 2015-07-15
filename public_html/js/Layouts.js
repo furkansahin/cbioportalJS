@@ -146,7 +146,7 @@ function refreshCytoscape(graphData) { // on dom ready
                 'down-regulated': 0.3,
                 'mouse-position-x': 0,
                 'mouse-position-y': 0,
-                'total-alteration': 33,
+                'total-alteration': 100,
                 'show-total-alteration': false
             })
             .selector('node:parent')
@@ -265,15 +265,18 @@ function refreshCytoscape(graphData) { // on dom ready
             cy.on('tap', 'node', function(evt){
                 tapped = false;
                 if (!this.isParent()) {
-                    if (this._private.style['show-details-selected'] === true){
-                        this._private.style['show-details'] = false;
-                        this._private.style['show-details-selected'] = false;
+                    var nodes = cy.filter(function(i, element){
+                        return element.isNode() && element._private.style['show-details-selected']=== true;
+                    });
+                    for (var i = 0; i < nodes.length; i++){
+                        nodes[i]._private.style['show-details'] = false;
+                        nodes[i]._private.style['show-details-selected'] = false;
                     }
-                    else {
-                        this._private.style['show-details'] = true;
-                        this._private.style['show-details-selected'] = true;
-                        this._private.style['show-total-alteration'] = false;
-                    }
+
+                    this._private.style['show-details'] = true;
+                    this._private.style['show-details-selected'] = true;
+                    this._private.style['show-total-alteration'] = false;
+
                     cy.layout({
                         name: 'preset',
                         fit: false
