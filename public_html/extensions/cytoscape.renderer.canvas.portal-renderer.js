@@ -41,6 +41,10 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
     $$.style.properties['show-details'] = {name: 'show-details', type: $$.style.types.trueOrFalse};
 
     $$.style.types.trueOrFalse = {enums: ['true', 'false']};
+    $$.style.properties.push({name: 'show-total-alteration', type: $$.style.types.trueOrFalse});
+    $$.style.properties['show-total-alteration'] = {name: 'show-total-alteration', type: $$.style.types.trueOrFalse};
+
+    $$.style.types.trueOrFalse = {enums: ['true', 'false']};
     $$.style.properties.push({name: 'show-details-selected', type: $$.style.types.trueOrFalse});
     $$.style.properties['show-details-selected'] = {name: 'show-details-selected', type: $$.style.types.trueOrFalse};
 
@@ -65,6 +69,15 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
     $$.style.properties.push({name: 'down-regulated', type: $$.style.types.percent});
     $$.style.properties['down-regulated'] = {name: 'down-regulated', type: $$.style.types.percent};
 
+    $$.style.properties.push({name: 'mouse-position-x', type: $$.style.types.percent});
+    $$.style.properties['mouse-position-x'] = {name: 'mouse-position-x', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'mouse-position-y', type: $$.style.types.percent});
+    $$.style.properties['mouse-position-y'] = {name: 'mouse-position-y', type: $$.style.types.percent};
+
+    $$.style.properties.push({name: 'total-alteration', type: $$.style.types.percent});
+    $$.style.properties['total-alteration'] = {name: 'total-alteration', type: $$.style.types.percent};
+
     // Draw node
     CRp.drawNode = function(context, node, drawOverlayInstead) {
 
@@ -72,6 +85,7 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
             node.css('opacity', 1.0);
             node.css('background-opacity', 1.0);
         }
+
 
 
         if (node._private.style['show-details'] === true || node._private.style['show-details-selected'] === true)
@@ -444,9 +458,32 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
                 context.fill();
             }
         }
-
-
-
+        if (node._private.style['show-total-alteration'] === true) {
+            context.fillStyle = "#000000";
+            context.shadowColor = "black";
+            context.shadowOffsetX = 3;
+            context.shadowOffsetY = 3;
+            context.shadowBlur = 10;
+            context.lineWidth = 2;
+            context.beginPath();
+            var a = node._private.position['x'];
+            var b = node._private.position['y'];
+            if (node._private.style['total-alteration'].value === 100){
+                context.rect(node._private.style['mouse-position-x']+15, node._private.style['mouse-position-y']+15, 45, 20);
+            }
+            else {
+                context.rect(node._private.style['mouse-position-x'] + 15, node._private.style['mouse-position-y'] + 15, 35, 20);
+            }
+            context.fill();
+            context.fillStyle = "red";
+            if (node._private.style['total-alteration'].value === 100) {
+                context.fillText(node._private.style['total-alteration'].value.toString() + "%", node._private.style['mouse-position-x']+38, node._private.style['mouse-position-y']+26);
+            }
+            else
+                context.fillText(node._private.style['total-alteration'].value.toString() + "%", node._private.style['mouse-position-x']+32, node._private.style['mouse-position-y']+26);
+            context.closePath();
+            context.stroke();
+        }
 
     }
 })(cytoscape);

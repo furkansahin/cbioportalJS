@@ -143,7 +143,11 @@ function refreshCytoscape(graphData) { // on dom ready
                 'gain': 0.2,
                 'hemizygous-deletion': 0.1,
                 'up-regulated': 0.6,
-                'down-regulated': 0.3
+                'down-regulated': 0.3,
+                'mouse-position-x': 0,
+                'mouse-position-y': 0,
+                'total-alteration': 33,
+                'show-total-alteration': false
             })
             .selector('node:parent')
             .css({
@@ -193,10 +197,20 @@ function refreshCytoscape(graphData) { // on dom ready
         motionBlur: true,
         wheelSensitivity: 0.1,
         ready: function(){
-
             cy.on('mouseover', 'node', function(evt){
                 if (!this.isParent()) {
                     this._private.style['show-details'] = true;
+                    this._private.style['show-total-alteration'] = true;
+                    cy.layout({
+                        name: 'preset',
+                        fit: false
+                    });
+                }
+            });
+            cy.on('mousemove', 'node', function(evt){
+                if (!this.isParent()) {
+                    this._private.style['mouse-position-x'] = evt.cyPosition.x;
+                    this._private.style['mouse-position-y'] = evt.cyPosition.y;
                     cy.layout({
                         name: 'preset',
                         fit: false
@@ -204,6 +218,8 @@ function refreshCytoscape(graphData) { // on dom ready
                 }
             });
             cy.on('mouseout', 'node', function(evt){
+                this._private.style['show-total-alteration'] = false;
+
                 if (!this.selected()) {
                     this.css('show-details', 'false');
                     cy.layout({
@@ -256,6 +272,7 @@ function refreshCytoscape(graphData) { // on dom ready
                     else {
                         this._private.style['show-details'] = true;
                         this._private.style['show-details-selected'] = true;
+                        this._private.style['show-total-alteration'] = false;
                     }
                     cy.layout({
                         name: 'preset',
