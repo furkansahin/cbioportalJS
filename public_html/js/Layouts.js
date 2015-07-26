@@ -127,6 +127,7 @@ function refreshCytoscape(graphData) { // on dom ready
         style: cytoscape.stylesheet()
             .selector('node')
             .css({
+                'opacity': 0.5,
                 'content': 'data(name)',
                 'text-valign': 'center',
                 'color': 'white',

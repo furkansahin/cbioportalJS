@@ -82,8 +82,8 @@ var rgbs     = ['rgb(254,80,51)', 'rgb(53,91,255)', 'rgb(255,208,214)', 'rgb(158
     CRp.drawNode = function(context, node, drawOverlayInstead) {
 
         if(node._private.style['show-details'] === true){
-            node.css('opacity', 1.0);
-            node.css('background-opacity', 1.0);
+ //           node.css('opacity', 1.0);
+ //           node.css('background-opacity', 1.0);
         }
         var font = context.font;
         context.shadowOffsetX = 0;

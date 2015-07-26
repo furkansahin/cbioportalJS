@@ -1,0 +1,6 @@
+
+*.xml
+
+public_html/.idea/.name
+
+*.iml
